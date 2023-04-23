@@ -5,7 +5,12 @@ import { Component } from '@angular/core'
   template: `
     <div fxLayout="column" fxLayoutAlign="center center">
       <span class="mat-display-2">Hello, Limoncu!</span>
-      <button mat-raised-button color="primary">Login</button>
+      <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+        <button mat-raised-button color="primary">Login</button>
+        <button mat-raised-button color="primary" routerLink="/manager">
+          Login as Manager
+        </button>
+      </div>
     </div>
   `,
   styles: [
