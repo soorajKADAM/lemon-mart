@@ -1,6 +1,14 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { MatIconRegistry } from '@angular/material/icon'
 import { DomSanitizer } from '@angular/platform-browser'
+import {
+  NavigationEnd,
+  NavigationStart,
+  Event,
+  RouterEvent,
+  Router,
+} from '@angular/router'
+import { filter } from 'rxjs'
 
 import { AuthService } from './auth/auth.service'
 
@@ -46,18 +54,40 @@ import { AuthService } from './auth/auth.service'
       </button>
     </mat-toolbar>
     <router-outlet></router-outlet>
+    <div class="loader" *ngIf="displayLoader"></div>
   `,
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  displayLoader = false
   constructor(
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
-    public authService: AuthService
+    public authService: AuthService,
+    private router: Router
   ) {
     iconRegistry.addSvgIcon(
       'lemon',
       sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/lemon.svg')
     )
+  }
+  ngOnInit() {
+    this.router.events.subscribe((routerEvent: Event) => {
+      if (routerEvent instanceof NavigationStart) {
+        this.displayLoader = true
+      }
+      if (routerEvent instanceof NavigationEnd) {
+        this.displayLoader = false
+      }
+      this.router.events
+        .pipe(filter((event) => event instanceof RouterEvent))
+        .subscribe((event) => {
+          console.log(
+            `the current event is :  ${(event as RouterEvent).url} | ${
+              (event as RouterEvent).id
+            }`
+          )
+        })
+    })
   }
 }
