@@ -19,6 +19,7 @@ import { HomeComponent } from './home/home.component'
 import { InventoryModule } from './inventory/inventory.module'
 import { LoginComponent } from './login/login.component'
 import { MaterialModule } from './material.module'
+import { NavigationMenuComponent } from './navigation-menu/navigation-menu.component'
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component'
 import { PosModule } from './pos/pos.module'
 import { UserModule } from './user/user.module'
@@ -30,6 +31,7 @@ import { UserModule } from './user/user.module'
     PageNotFoundComponent,
     LoginComponent,
     SimpleDialogComponent,
+    NavigationMenuComponent
   ],
   imports: [
     BrowserModule,

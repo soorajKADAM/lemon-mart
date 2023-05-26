@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 
+import { AuthGuard } from './auth/auth-guard.service'
 import { HomeComponent } from './home/home.component'
 import { LoginComponent } from './login/login.component'
 import { ManagerHomeComponent } from './manager/manager-home/manager-home.component'
@@ -13,6 +14,7 @@ const routes: Routes = [
   {
     path: 'manager',
     loadChildren: () => import('./manager/manager.module').then((m) => m.ManagerModule),
+    canLoad: [AuthGuard],
   },
   {
     path: 'user',
