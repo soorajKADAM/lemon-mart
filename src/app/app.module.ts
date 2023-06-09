@@ -1,5 +1,8 @@
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'
 import { NgModule } from '@angular/core'
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app'
+import { getAuth, provideAuth } from '@angular/fire/auth'
+import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/compat/auth'
 import { FlexLayoutModule } from '@angular/flex-layout'
 import { ReactiveFormsModule } from '@angular/forms'
 import { MatDialogModule } from '@angular/material/dialog'
@@ -8,9 +11,11 @@ import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { RouterModule } from '@angular/router'
 
+import { environment } from '../environments/environment'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { AuthHttpInterceptor } from './auth/auth-http-interceptor'
+import { FirebaseAuthService } from './auth/auth.firebase.service'
 import { InMemoryAuthService } from './auth/auth.inmemory.service'
 import { AuthService } from './auth/auth.service'
 import { SimpleDialogComponent } from './common/simple-dialog/simple-dialog.component'
@@ -22,10 +27,7 @@ import { MaterialModule } from './material.module'
 import { NavigationMenuComponent } from './navigation-menu/navigation-menu.component'
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component'
 import { PosModule } from './pos/pos.module'
-import { UserModule } from './user/user.module';
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
-import { environment } from '../environments/environment';
-import { provideAuth,getAuth } from '@angular/fire/auth'
+import { UserModule } from './user/user.module'
 
 @NgModule({
   declarations: [
@@ -34,7 +36,7 @@ import { provideAuth,getAuth } from '@angular/fire/auth'
     PageNotFoundComponent,
     LoginComponent,
     SimpleDialogComponent,
-    NavigationMenuComponent
+    NavigationMenuComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,7 +57,8 @@ import { provideAuth,getAuth } from '@angular/fire/auth'
   providers: [
     {
       provide: AuthService,
-      useClass: InMemoryAuthService,
+      useClass: FirebaseAuthService,
+      deps: [AngularFireAuth],
     },
     {
       provide: HTTP_INTERCEPTORS,
