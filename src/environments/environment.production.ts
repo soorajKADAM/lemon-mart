@@ -1,5 +1,8 @@
+import { AuthMode } from 'src/app/auth/auth.enum'
+
 export const environment = {
   production: true,
+  authMode: AuthMode.Firebase,
   firebase: {
     projectId: 'lemon-mart-92796',
     appId: '1:908489416159:web:453f59cf9f9a7f031db86a',
