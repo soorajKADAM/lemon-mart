@@ -1,8 +1,8 @@
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'
 import { NgModule } from '@angular/core'
-import { initializeApp, provideFirebaseApp } from '@angular/fire/app'
-import { getAuth, provideAuth } from '@angular/fire/auth'
+import { AngularFireModule } from '@angular/fire/compat'
 import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/compat/auth'
+import { FirestoreModule } from '@angular/fire/firestore'
 import { FlexLayoutModule } from '@angular/flex-layout'
 import { ReactiveFormsModule } from '@angular/forms'
 import { MatDialogModule } from '@angular/material/dialog'
@@ -29,6 +29,9 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { PosModule } from './pos/pos.module'
 import { UserModule } from './user/user.module'
 
+// import { initializeApp, provideFirebaseApp } from '@angular/fire/app'
+// import { getAuth, provideAuth } from '@angular/fire/auth'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,8 +54,9 @@ import { UserModule } from './user/user.module'
     ReactiveFormsModule,
     MatSnackBarModule,
     MatDialogModule,
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideAuth(() => getAuth()),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    FirestoreModule,
   ],
   providers: [
     {
